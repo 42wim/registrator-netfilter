@@ -1,3 +1,34 @@
+This is a module for registrator (https://github.com/gliderlabs/registrator/)
+
+## Building
+To build your version of registrator with this module.
+Make sure you have [Go](https://golang.org/doc/install) properly installed, including setting up your [GOPATH](https://golang.org/doc/code.html#GOPATH)
+
+
+Next, run
+
+ ```
+ $ cd $GOPATH
+ $ go get github.com/gliderlabs/registrator
+ $  src/github.com/gliderlabs/registrator/modules.go
+ ```
+
+ Edit the file *$GOPATH/src/github.com/gliderlabs/registrator/modules.go*  
+ Add the following line to the import path of modules.go
+
+ ```
+  _ "github.com/42wim/registrator-netfilter"
+ ```
+
+ Run go get again (will fetch the code from github.com/42wim/registrator-netfilter)
+
+ ```
+ $ go get
+ ```
+
+You will now have a "registrator" binary in *$GOPATH/bin*
+
+
 ## Netfilter
 
         netfilter://mychain/myset
