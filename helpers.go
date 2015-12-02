@@ -46,6 +46,8 @@ func ipsetRun(ipcmd string) error {
 }
 
 func ipsetHost(command string, set string, ip string, proto string, port string) error {
+	_ = ipsetInitWithHash(set, "ip,port")
+
 	cmd := "-! " + command + " " + set + " " + ip + "," + proto + ":" + port
 	log.Println("ipsetHost()", cmd)
 	err := ipsetRun(cmd)
@@ -81,7 +83,20 @@ func iptablesInit(chain string, set string) error {
 }
 
 func ipsetInit(set string) error {
-	err := ipsetRun("-! create " + set + " hash:ip,port family inet6")
+	err := ipsetInitAndFlushWithHash(set, "ip,port")
+	return err
+}
+
+func ipsetInitWithHash(set string, hash string) error {
+	err := ipsetRun("-! create " + set + " hash:" + hash + " family inet6")
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func ipsetInitAndFlushWithHash(set string, hash string) error {
+	err := ipsetInitWithHash(set, hash)
 	if err != nil {
 		return err
 	}
